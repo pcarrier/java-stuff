@@ -12,7 +12,7 @@ public class HexPrint extends SimpleBenchmark {
     private Method method;
 
     private byte[] value;
-    static final byte[] hexBytes = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+    static final char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
     public enum Method {
         @SuppressWarnings("UnusedDeclaration")
@@ -20,11 +20,11 @@ public class HexPrint extends SimpleBenchmark {
             @Override
             final String convert(final byte[] in) {
                 final int length = in.length;
-                final byte[] out = new byte[2 * length];
-                for (int i = 0; i < length; i++) {
+                final char[] out = new char[2 * length];
+                for (int i = length - 1; i >= 0; i--) {
                     final byte inByte = in[i];
-                    out[2*i] = hexBytes[(inByte & 0xf0) >> 4];
-                    out[2*i+1] = hexBytes[inByte & 0xf];
+                    out[2*i] = hexChars[(inByte & 0xf0) >> 4];
+                    out[2*i+1] = hexChars[inByte & 0xf];
                 }
                 return new String(out);
             }
