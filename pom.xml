@@ -35,7 +35,7 @@
                         <argument>-classpath</argument>
                         <classpath/>
                         <argument>HexPrint</argument>
-                        <argument>-Dlength=128,1024,1048576,1073741824</argument>
+                        <argument>-Dbits=128,1024,4096</argument>
                     </arguments>
                 </configuration>
             </plugin>
