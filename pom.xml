@@ -12,13 +12,13 @@
         <dependency>
             <groupId>com.google.caliper</groupId>
             <artifactId>caliper</artifactId>
-            <version>0.5-rc1</version>
+            <version>1.0-beta-1</version>
         </dependency>
 
         <dependency>
-            <groupId>com.github.peichhorn</groupId>
-            <artifactId>lombok-pg</artifactId>
-            <version>0.11.3</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.14.4</version>
         </dependency>
     </dependencies>
 
@@ -38,10 +38,12 @@
                 <configuration>
                     <executable>java</executable>
                     <arguments>
+                        <argument>-Xms1024m</argument>
+                        <argument>-Xmx1024m</argument>
                         <argument>-classpath</argument>
                         <classpath/>
-                        <argument>HexPrint</argument>
-                        <argument>-Dbits=128,1024,4096</argument>
+                        <argument>SeqNodeId</argument>
+                        <!--<argument>-Dbits=128,1024,4096</argument>-->
                     </arguments>
                 </configuration>
             </plugin>
@@ -54,6 +56,20 @@
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

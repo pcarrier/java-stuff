@@ -1,22 +1,37 @@
+import com.google.caliper.Benchmark;
 import com.google.caliper.Param;
-import com.google.caliper.Runner;
-import com.google.caliper.SimpleBenchmark;
+import com.google.caliper.runner.CaliperMain;
 
 import java.math.BigInteger;
 import java.util.Random;
 
-public class HexPrint extends SimpleBenchmark {
+public class HexPrint extends Benchmark {
+  static final char[] hexChars =
+          {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
   @Param
   private int bits;
+
   @Param
   private Method method;
-
   private byte[] value;
-  static final
-  char[]
-      hexChars =
-      {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
+  public static void main(String... args) throws Exception {
+    CaliperMain.main(HexPrint.class, args);
+  }
+
+  public void timeHexPrint(int reps) {
+    while (reps > 0) {
+      method.convert(value);
+      reps--;
+    }
+  }
+
+  @Override
+  protected void setUp() {
+    Random rnd = new Random();
+    value = new BigInteger(bits, rnd).toByteArray();
+  }
 
   public enum Method {
     @SuppressWarnings("UnusedDeclaration")
@@ -27,7 +42,7 @@ public class HexPrint extends SimpleBenchmark {
         final char[] out = new char[2 * length];
         for (int i = length - 1; i >= 0; i--) {
           final byte inByte = in[i];
-          out[2 * i] = hexChars[(inByte & 0xf0) >> 4];
+          out[2 * i] = hexChars[(inByte & 0xf0) >>> 4];
           out[2 * i + 1] = hexChars[inByte & 0xf];
         }
         return new String(out);
@@ -53,21 +68,5 @@ public class HexPrint extends SimpleBenchmark {
     },;
 
     abstract String convert(final byte[] in);
-  }
-
-  public void timeHexPrint(int reps) {
-    for (int i = 0; i < reps; i++) {
-      method.convert(value);
-    }
-  }
-
-  @Override
-  protected void setUp() {
-    Random rnd = new Random();
-    value = new BigInteger(bits, rnd).toByteArray();
-  }
-
-  public static void main(String[] args) throws Exception {
-    Runner.main(HexPrint.class, args);
   }
 }
