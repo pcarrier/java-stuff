@@ -28,7 +28,7 @@ public class SeqNodeId extends Benchmark {
 
   public void timeConvert(int reps) {
     while (reps > 0) {
-      idToChars((int) XRANDR.next());
+      idToChars((int) XRANDR.get());
       reps--;
     }
   }
@@ -42,21 +42,21 @@ public class SeqNodeId extends Benchmark {
 
   public void timeXorRandom(int reps) {
     while (reps > 0) {
-      XRANDR.next();
+      XRANDR.get();
       reps--;
     }
   }
 
   public void timeBranchingAbs(int reps) {
     while (reps > 0) {
-      abs0((int) XRANDR.next());
+      abs0((int) XRANDR.get());
       reps--;
     }
   }
 
   public void timeDirectAbs(int reps) {
     while (reps > 0) {
-      abs1((int) XRANDR.next());
+      abs1((int) XRANDR.get());
       reps--;
     }
   }
